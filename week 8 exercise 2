@@ -1,0 +1,48 @@
+-- 2.1 — Search by Name
+SELECT first_name, last_name FROM students 
+WHERE last_name LIKE '%s%';
+
+-- 2.2 — Email Domain Search
+SELECT first_name, last_name, email FROM teachers 
+WHERE email LIKE '%@cs50.harvard.edu';
+
+-- 2.3 — Top 5 GPAs
+SELECT first_name, last_name, gpa FROM students 
+ORDER BY gpa DESC 
+LIMIT 5;
+
+-- 2.4 — Distinct Enrollment Years
+SELECT DISTINCT enrollment_year FROM students;
+
+-- 2.5 — Multiple Departments
+SELECT code, title, department_id FROM courses 
+WHERE department_id IN (1, 2);
+
+-- 2.6 — Students NOT from 2018
+SELECT first_name, last_name, enrollment_year FROM students 
+WHERE enrollment_year NOT IN (2018);
+
+-- 2.7 — Sort Courses by Credits then Title
+SELECT credits, title FROM courses 
+ORDER BY credits DESC, title ASC;
+-- 2.8 — Find Books by Title Pattern
+SELECT title FROM books 
+WHERE title LIKE 'The%';
+
+-- 2.9 — Non-Returned Loans
+SELECT id, member_id, due_date FROM loans 
+WHERE return_date IS NULL;
+
+-- 2.10 — British Authors
+-- Note: Assuming the column is 'nationality'
+SELECT first_name, last_name FROM authors 
+WHERE nationality = 'British' 
+ORDER BY last_name;
+
+-- 2.11 — Premium and Student Members
+SELECT first_name, last_name, membership_type FROM members 
+WHERE membership_type IN ('premium', 'student');
+
+-- 2.12 — Challenge: 4-Letter First Names
+SELECT first_name FROM students 
+WHERE first_name LIKE '____';
