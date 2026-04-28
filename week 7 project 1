@@ -1,0 +1,56 @@
+# solution.py — Language Poll Analyser
+# Author: Resul
+# Date: April 28, 2026
+
+import csv
+import sys
+
+def main():
+    # Dosya yolu (Starter scaffold'daki gibi)
+    filepath = "../../week1/favorites.csv"
+    
+    counts = {}
+
+    try:
+        with open(filepath, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # CASE-INSENSITIVE handling: 
+                # .strip() boşlukları temizler, .capitalize() ise "pYtHoN" -> "Python" yapar.
+                language = row["language"].strip().capitalize()
+
+                # Dictionary counting logic
+                if language in counts:
+                    counts[language] += 1
+                else:
+                    counts[language] = 1
+
+    except FileNotFoundError:
+        print(f"Error: The file '{filepath}' was not found.")
+        return
+
+    # Sorting by popularity (values) in descending order
+    # key=counts.get tells sorted to look at the dictionary values for sorting
+    sorted_languages = sorted(counts, key=counts.get, reverse=True)
+
+    # Calculate total for percentages
+    total_responses = sum(counts.values())
+
+    print("\n=== Language Popularity Report ===")
+    
+    # Using enumerate for rank numbers starting from 1
+    for rank, language in enumerate(sorted_languages, start=1):
+        count = counts[language]
+        percentage = (count / total_responses) * 100
+        
+        # ASCII Bar Extension (1 block for every 10 students)
+        bar = "█" * (count // 10)
+        
+        # Formatting: :<10 left-aligns the language in a 10-char space
+        print(f"{rank}. {language:<10} : {count:>3} students ({percentage:>5.1f}%) {bar}")
+
+    print("-" * 35)
+    print(f"Total responses: {total_responses}")
+
+if __name__ == "__main__":
+    main()
